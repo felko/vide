@@ -16,7 +16,9 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        # vide = pkgs.callPackage ./vide.nix {};
+        
+        git = pkgs.git;
+        zellij = pkgs.zellij;
         kakoune = pkgs.kakoune;
         broot = pkgs.broot;
         lazygit = pkgs.lazygit;
