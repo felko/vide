@@ -57,22 +57,6 @@
         "type": "github"
       }
     },
-    "kakoune-source": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1702376971,
-        "narHash": "sha256-yJ30mdMC36sbMkeIOkE5HypPz3PGPexsrWWdx1K6Bkk=",
-        "owner": "mawww",
-        "repo": "kakoune",
-        "rev": "83fb65aef5729167b47c6ec22a57e5bd6ac5a9ae",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mawww",
-        "repo": "kakoune",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1703761225,
@@ -91,7 +75,6 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "kakoune-source": "kakoune-source",
         "nixpkgs": "nixpkgs",
         "zjstatus-source": "zjstatus-source"
       }
