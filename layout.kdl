@@ -1,56 +1,64 @@
 layout {
   default_tab_template {
-      children
+    children
 
-      pane size=1 borderless=true {
-          plugin location="file:@zjstatus@" {
-              format_left  "{mode} #[fg=#89B4FA,bold] {tabs}"
-              format_right "{command_git_branch} {session}"
-              format_space ""
+    pane size=1 borderless=true {
+      plugin location="file:@zjstatus@" {
+        format_left  "{mode} #[fg=#89B4FA,bold] {tabs}"
+        format_right "{command_git_branch} {session}"
+        format_space ""
 
-              border_enabled  "false"
-              border_char     "─"
-              border_format   "#[fg=#6C7086]{char}"
-              border_position "top"
+        border_enabled  "false"
+        border_char     "─"
+        border_format   "#[fg=#6C7086]{char}"
+        border_position "top"
 
-              hide_frame_for_single_pane "true"
+        hide_frame_for_single_pane "true"
 
-              mode_normal       "#[bg=#89B4FA] {name} "
-              mode_locked       "#[bg=#89B4FA] {name} "
-              mode_resize       "#[bg=#89B4FA] {name} "
-              mode_pane         "#[bg=#89B4FA] {name} "
-              mode_tab          "#[bg=#89B4FA] {name} "
-              mode_scroll       "#[bg=#89B4FA] {name} "
-              mode_enter_search "#[bg=#89B4FA] {name} "
-              mode_search       "#[bg=#89B4FA] {name} "
-              mode_rename_tab   "#[bg=#89B4FA] {name} "
-              mode_rename_pane  "#[bg=#89B4FA] {name} "
-              mode_session      "#[bg=#89B4FA] {name} "
-              mode_move         "#[bg=#89B4FA] {name} "
-              mode_prompt       "#[bg=#89B4FA] {name} "
-              mode_tmux         "#[bg=#ffc387] {name} "
+        mode_normal       "#[bg=#89B4FA] {name} "
+        mode_locked       "#[bg=#89B4FA] {name} "
+        mode_resize       "#[bg=#89B4FA] {name} "
+        mode_pane         "#[bg=#89B4FA] {name} "
+        mode_tab          "#[bg=#89B4FA] {name} "
+        mode_scroll       "#[bg=#89B4FA] {name} "
+        mode_enter_search "#[bg=#89B4FA] {name} "
+        mode_search       "#[bg=#89B4FA] {name} "
+        mode_rename_tab   "#[bg=#89B4FA] {name} "
+        mode_rename_pane  "#[bg=#89B4FA] {name} "
+        mode_session      "#[bg=#89B4FA] {name} "
+        mode_move         "#[bg=#89B4FA] {name} "
+        mode_prompt       "#[bg=#89B4FA] {name} "
+        mode_tmux         "#[bg=#ffc387] {name} "
 
-              tab_normal   "#[fg=#6C7086] {name} "
-              tab_active   "#[fg=#9399B2,bold,italic] {name} "
+        tab_normal   "#[fg=#6C7086] {name} "
+        tab_active   "#[fg=#9399B2,bold,italic] {name} "
 
-              command_git_branch_command     "@git@ rev-parse --abbrev-ref HEAD"
-              command_git_branch_format      "#[fg=blue] {stdout} "
-              command_git_branch_interval    "10"
-              command_git_branch_rendermode  "static"
-          }
+        command_git_branch_command     "@git@ rev-parse --abbrev-ref HEAD"
+        command_git_branch_format      "#[fg=blue] {stdout} "
+        command_git_branch_interval    "10"
+        command_git_branch_rendermode  "static"
       }
+    }
   }
   
   tab name="file" {
-      pane name="main" command="@broot@"
+    pane name="main" command="@broot@"
   }
   tab name="edit" focus=true {
-      pane split_direction="vertical" {
-          pane name="main" command="@kakouneStartup@" size="61%"
-          pane name="term"
-      }
+    pane split_direction="vertical" {
+      pane name="main" command="@kakouneStartup@" size="61%"
+      pane name="term"
+    }
   }
   tab name="git" {
-      pane name="main" command="@lazygit@"
+    pane name="main" command="@lazygit@"
+  }
+}
+
+keybinds {
+  normal {
+    bind "Ctrl f" { GoToTab 1; }
+    bind "Ctrl e" { GoToTab 2; }
+    bind "Ctrl v" { GoToTab 3; }
   }
 }
