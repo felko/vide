@@ -57,6 +57,22 @@
         "type": "github"
       }
     },
+    "kks-source": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1693140864,
+        "narHash": "sha256-Rz28FXg/57rHNiminvKTcwWpFrNlkf6Pfh7yyYk60kc=",
+        "owner": "kkga",
+        "repo": "kks",
+        "rev": "40ecb2c8cfd65633b23b47c7827ac041daf976a3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kkga",
+        "repo": "kks",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1703761225,
@@ -75,6 +91,7 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
+        "kks-source": "kks-source",
         "nixpkgs": "nixpkgs",
         "zjstatus-source": "zjstatus-source"
       }
