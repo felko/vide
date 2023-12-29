@@ -46,10 +46,15 @@
             echo evaluate-commands -client "$2" echo "no file selected" | kak -p "$1"
           fi
         '';
+        kakouneTheme = pkgs.substituteAll {
+	  name = "vide-theme.kak";
+          src = ./theme.kak;
+	};
         kakoune-config = pkgs.substituteAll {
           name = "vide.kak";
           src = ./vide.kak;
           selectFile = select-file;
+	  theme = kakouneTheme;
         };
         session-name-generator = pkgs.writeShellScript "vide-session-name-generator.sh" ''
           echo "$(basename $(pwd))" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9-'
