@@ -13,7 +13,9 @@ source @theme@
 
 add-highlighter global/ number-lines -relative
 
-# editing options
+
+# options
+
 set-option global tabstop 2
 set-option global scrolloff 5,10
 
@@ -39,9 +41,11 @@ define-command edit-or-buffer -params 0.. %{
 }
 
 # user modes
+
 declare-user-mode file
 declare-user-mode buffer
 declare-user-mode eval
+
 map -docstring "file" global user f ': enter-user-mode file<ret>'
 map -docstring "buffer" global user b ': enter-user-mode buffer<ret>'
 map -docstring "eval" global user e ': enter-user-mode eval<ret>'
