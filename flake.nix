@@ -39,7 +39,7 @@
           ${kakoune}/bin/kak -n $session_arg -e 'rename-client main' -E 'source ${kakoune-config}'
         '';
         select-file = pkgs.writeShellScript "vide-select-file.sh" ''
-          selected="$(${broot}/bin/broot)"
+          selected="$(${broot}/bin/broot --conf ${./broot/select.toml})"
           if [ -n "$selected" ]; then
             echo evaluate-commands -client "$2" edit "$selected" | kak -p "$1"
           else
