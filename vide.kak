@@ -5,6 +5,8 @@ source @theme@
 # user modes
 declare-user-mode file
 
+map global user f ': enter-user-mode file<ret>
+
 # file
 define-command vide-select-file %{
     evaluate-commands %sh{
