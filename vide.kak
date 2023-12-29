@@ -1,4 +1,5 @@
 # interface
+
 set-option global modelinefmt '%val{bufname} %val{cursor_line}:%val{cursor_char_column} {{context_info}} {{mode_info}}'
 set-option global startup_info_version 20250101
 set-option global ui_options \
@@ -40,8 +41,10 @@ define-command edit-or-buffer -params 0.. %{
 # user modes
 declare-user-mode file
 declare-user-mode buffer
+declare-user-mode eval
 map -docstring "file" global user f ': enter-user-mode file<ret>'
 map -docstring "buffer" global user b ': enter-user-mode buffer<ret>'
+map -docstring "eval" global user e ': enter-user-mode eval<ret>'
 
 
 ## file
@@ -75,3 +78,14 @@ map -docstring "delete" global buffer q ': delete-buffer<ret>'
 map -docstring "scratch" global buffer s ': edit -scratch<ret>'
 map -docstring "debug" global buffer d ': edit -debug<ret>'
 
+
+## eval
+
+
+define-command -docstring 'evaluate kakscript' evaluate-kakscript  %{
+  evaluate-commands -itersel %{
+    evaluate-commands %val{selection}
+  }
+}
+
+map -docstring 'kakscript' global eval k ': evaluate-kakscript<ret>'
