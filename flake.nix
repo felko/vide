@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
 
-    # Sources
+    # sources
     zjstatus-source = {
       url = "github:dj95/zjstatus";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,7 +47,7 @@
         zjstatus = zjstatus-source.packages.${system}.default;
 
         kakoune-startup = pkgs.writeShellScript "vide-kakoune-startup.sh" ''
-	  session_name="$(${session-name-generator})"
+	        session_name="$(${session-name-generator})"
           case "$(kak -l)" in
               *"$session_name (dead)"*)
                   kak -clear
@@ -84,17 +84,17 @@
             echo evaluate-commands -client "$2" echo "no buffer selected" | kak -p "$1"
           fi
         '';
-        kakouneTheme = pkgs.substituteAll {
-	  name = "vide-theme.kak";
+        kakoune-theme = pkgs.substituteAll {
+        	name = "vide-theme.kak";
           src = ./theme.kak;
-	};
+ 	      };
         kakoune-config = pkgs.substituteAll {
           name = "vide.kak";
           src = ./vide.kak;
           selectFile = select-file;
           selectDirectory = select-directory;
           selectBuffer = select-buffer;
-	        theme = kakouneTheme;
+	        theme = kakoune-theme;
         };
         session-name-generator = pkgs.writeShellScript "vide-session-name-generator.sh" ''
           echo "$(basename $(pwd))" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9-'
