@@ -5,7 +5,7 @@ layout {
     pane size=1 borderless=true {
       plugin location="file:@zjstatus@" {
         format_left  "{mode} #[fg=#89B4FA,bold] {tabs}"
-        format_right "{command_git_branch} {session}"
+        format_right "{session}"
         format_space ""
 
         border_enabled  "false"
@@ -32,11 +32,6 @@ layout {
 
         tab_normal   "#[fg=#000000] {name} "
         tab_active   "#[fg=#000000][{name}]"
-
-        command_git_branch_command     "@git@ rev-parse --abbrev-ref HEAD"
-        command_git_branch_format      "#[fg=blue] {stdout} "
-        command_git_branch_interval    "10"
-        command_git_branch_rendermode  "static"
       }
     }
   }
@@ -54,6 +49,9 @@ layout {
     pane name="main" command="@vcsClient@"
   }
 }
+
+on_force_close "quit"
+pane_frames false
 
 keybinds {
   normal {
