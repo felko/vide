@@ -36,7 +36,7 @@
                   session_arg="-s $session_name";;
           esac
 
-          ${kakoune}/bin/kak $session_arg -e 'rename-client main' -E 'source ${kakoune-config}'
+          ${kakoune}/bin/kak -n $session_arg -e 'rename-client main' -E 'source ${kakoune-config}'
         '';
         select-file = pkgs.writeShellScript "vide-select-file.sh" ''
           selected="$(${broot}/bin/broot)"
