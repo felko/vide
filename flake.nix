@@ -64,9 +64,10 @@
           src = ./layout.kdl;
           git = "${git}/bin/git";
           zjstatus = "${zjstatus}/bin/zjstatus.wasm";
-          broot = "${broot}/bin/broot";
-          lazygit = "${lazygit}/bin/lazygit";
-          kakouneStartup = "${kakoune-startup}";
+
+          fileExplorer = "${broot}/bin/broot";
+          vcsClient = "${lazygit}/bin/lazygit";
+          editorStartup = "${kakoune-startup}";
         };
         vide = pkgs.writeShellScriptBin "vide" ''
           session_name="$(${session-name-generator})"

@@ -30,8 +30,8 @@ layout {
         mode_prompt       "#[bg=#89B4FA] {name} "
         mode_tmux         "#[bg=#ffc387] {name} "
 
-        tab_normal   "#[fg=#6C7086] {name} "
-        tab_active   "#[fg=#9399B2,bold,italic] {name} "
+        tab_normal   "#[fg=#000000] {name} "
+        tab_active   "#[fg=#000000][{name}]"
 
         command_git_branch_command     "@git@ rev-parse --abbrev-ref HEAD"
         command_git_branch_format      "#[fg=blue] {stdout} "
@@ -42,16 +42,16 @@ layout {
   }
   
   tab name="file" {
-    pane name="main" command="@broot@"
+    pane name="main" command="@fileExplorer@"
   }
   tab name="edit" focus=true {
     pane split_direction="vertical" {
-      pane name="main" command="@kakouneStartup@" size="61%"
+      pane name="main" command="@editorStartup@" size="61%"
       pane name="term"
     }
   }
-  tab name="git" {
-    pane name="main" command="@lazygit@"
+  tab name="vcs" {
+    pane name="main" command="@vcsClient@"
   }
 }
 
