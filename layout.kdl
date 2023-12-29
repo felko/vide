@@ -70,5 +70,10 @@ keybinds {
     bind "Ctrl à"  { GoToTab 10; }
     bind "Ctrl )"  { GoToTab 11; }
 
+    bind "Ctrl l"  { Clear; }
+  }
+
+  shared_except "locked" {
+    bind "Ctrl f"  { ToggleFocusFullscreen; }
   }
 }
