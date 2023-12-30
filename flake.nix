@@ -21,103 +21,110 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        
-        git = pkgs.git;
-        zellij = pkgs.zellij;
-        kakoune = pkgs.kakoune;
-        broot = pkgs.broot;
-        lazygit = pkgs.lazygit;
-        kks = with pkgs; with lib;
-          buildGoModule rec {
-            pname = "kks";
-            version = "v0.3.8";
-            src = kks-source;
+        lib = pkgs.lib // import ./lib.nix { inherit pkgs; };
 
-            vendorHash = "sha256-E4D9FGTpS9NkZy6tmnuI/F4dnO9bv8MVaRstxVPvEfo=";
-            subPackages = [ "." ];
+        config = {
+          kakoune = lib.substituteComponentsRecursively {
+            name = "vide-kakoune-config";
+            dir = ./kak;
+            inherit components;
+          };
+          zellij = lib.substituteComponentsRecursively {
+            name = "vide-zellij-config";
+            dir = ./zellij;
+            inherit components;
+          };
+        };
 
-            ldflags = [ "-X main.version=${version}" "-X main.buildSource=nix" ];
+        programs =
+          let
+            kks = pkgs.buildGoModule rec {
+              pname = "kks";
+              version = "v0.3.8";
+              src = kks-source;
 
-            postInstall = ''
-              install -Dm555 scripts/kks-* -t $out/bin
+              vendorHash = "sha256-E4D9FGTpS9NkZy6tmnuI/F4dnO9bv8MVaRstxVPvEfo=";
+              subPackages = [ "." ];
+
+              ldflags = [ "-X main.version=${version}" "-X main.buildSource=nix" ];
+
+              postInstall = ''
+                install -Dm555 scripts/kks-* -t $out/bin
+              '';
+
+              meta = {
+                mainProgram = "kks";
+              };
+            };
+
+            broot = conf: pkgs.writeShellScript "vide-broot-${builtins.baseNameOf conf}.sh" ''
+              ${lib.getExe pkgs.broot} --conf ${conf} $@
             '';
+          in {
+            git = lib.getExe pkgs.git;
+            zellij = lib.getExe pkgs.zellij;
+            kak = lib.getExe pkgs.kakoune;
+            broot-select-file = broot ./broot/select-file.toml;
+            broot-select-directory = broot ./broot/select-directory.toml;
+            broot-file-explorer = broot ./broot/file-explorer.toml;
+            lazygit = lib.getExe pkgs.lazygit;
+            kks = lib.getExe kks;
+            fzf = lib.getExe pkgs.fzf;
+            zjstatus = "${zjstatus-source.packages.${system}.default}/bin/zjstatus.wasm";
+            shell = lib.getExe pkgs.fish;
+          };
+        
+        components =
+          let
+            substituteScript = file: components:
+              lib.substituteComponents {
+                name = "vide-${builtins.baseNameOf file}";
+                src = file;
+                isExecutable = true;
+                inherit components;
+              };
+          in rec {
+            sessionNameGenerator = substituteScript ./bin/session-name-generator.sh {};
+            editorStartup = substituteScript ./bin/editor-startup.sh {
+              inherit sessionNameGenerator;
+              inherit (programs) kak;
+            };
+            selectFile = substituteScript ./bin/select-file.sh {
+              inherit (programs) kks;
+              brootSelectFile = programs.broot-select-file;
+            };
+            selectDirectory = substituteScript ./bin/select-directory.sh {
+              inherit (programs) kks;
+              brootSelectDirectory = programs.broot-select-directory;
+            };
+            selectBuffer = substituteScript ./bin/select-buffer.sh {
+              inherit (programs) fzf kks;
+            };
+            scrollbackEditor = substituteScript ./bin/edit.sh {
+              inherit sessionNameGenerator;
+              inherit (programs) kks;
+            };
+            copyCommand = "pbcopy";
+            inherit (programs) git zjstatus shell zellij kak;
+            fileExplorer = programs.broot-file-explorer;
+            vcsClient = programs.lazygit;
           };
 
-				fzf = pkgs.fzf;
-        zjstatus = zjstatus-source.packages.${system}.default;
-
-        kakoune-startup = pkgs.writeShellScript "vide-kakoune-startup.sh" ''
-	        session_name="$(${session-name-generator})"
-          case "$(kak -l)" in
-              *"$session_name (dead)"*)
-                  kak -clear
-                  session_arg="-s $session_name";;
-              *"$session_name"*)
-                  session_arg="-c $session_name";;
-              *)
-                  session_arg="-s $session_name";;
-          esac
-
-          ${kakoune}/bin/kak -n $session_arg -e 'rename-client main' -E 'source ${kakoune-config}'
-        '';
-        select-file = pkgs.writeShellScript "vide-select-file.sh" ''
-          selected="$(${broot}/bin/broot --conf ${./broot/select-file.toml})"
-          if [ -n "$selected" ]; then
-            echo evaluate-commands -client "$2" edit-or-buffer "$selected" | kak -p "$1"
-          else
-            echo evaluate-commands -client "$2" echo "no file selected" | kak -p "$1"
-          fi
-        '';
-        select-directory = pkgs.writeShellScript "vide-select-directory.sh" ''
-          selected="$(${broot}/bin/broot --conf ${./broot/select-directory.toml} --only-folders)"
-          if [ -n "$selected" ]; then
-            echo evaluate-commands -client "$2" change-directory "$selected" | kak -p "$1"
-          else
-            echo evaluate-commands -client "$2" echo "no directory selected" | kak -p "$1"
-          fi
-        '';
-        select-buffer = pkgs.writeShellScript "vide-select-buffer.sh" ''
-          selected="$(KKS_SESSION="$1" KKS_CLIENT="$2" ${kks}/bin/kks get %val{buflist} | ${fzf}/bin/fzf)"
-          if [ -n "$selected" ]; then
-            echo evaluate-commands -client "$2" buffer "$selected" | kak -p "$1"
-          else
-            echo evaluate-commands -client "$2" echo "no buffer selected" | kak -p "$1"
-          fi
-        '';
-        kakoune-theme = pkgs.substituteAll {
-        	name = "vide-theme.kak";
-          src = ./theme.kak;
- 	      };
-        kakoune-config = pkgs.substituteAll {
-          name = "vide.kak";
-          src = ./vide.kak;
-          selectFile = select-file;
-          selectDirectory = select-directory;
-          selectBuffer = select-buffer;
-	        theme = kakoune-theme;
-        };
-        session-name-generator = pkgs.writeShellScript "vide-session-name-generator.sh" ''
-          echo "$(basename $(pwd))" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9-'
-        '';
-        layout = pkgs.substituteAll {
-          name = "vide-layout.kdl";
-          src = ./layout.kdl;
-          git = "${git}/bin/git";
-          zjstatus = "${zjstatus}/bin/zjstatus.wasm";
-
-          fileExplorer = "${broot}/bin/broot";
-          vcsClient = "${lazygit}/bin/lazygit";
-          editorStartup = "${kakoune-startup}";
-        };
+        # kakoune-theme = pkgs.substituteAll {
+        # 	name = "vide-theme.kak";
+        #   src = ./theme.kak;
+ 	      # };
         vide = pkgs.writeShellScriptBin "vide" ''
-          session_name="$(${session-name-generator})"
-          case "$(${zellij}/bin/zellij list-sessions --no-formatting --short)" in
+          export KAKOUNE_CONFIG_DIR="${config.kakoune}"
+          session_name="$(${components.sessionNameGenerator})"
+          export KKS_SESSION="$(${components.sessionNameGenerator})"
+          case "$(${programs.zellij} list-sessions --no-formatting --short)" in
               *"$session_name"*)
                   session_args="attach $session_name";;
               *)
-                  session_args="--session $session_name --layout ${layout}";;
+                  session_args="--session $session_name";;
           esac
-          ${zellij}/bin/zellij $session_args
+          ${programs.zellij} --config-dir "${config.zellij}" $session_args
         '';
       in {
         apps.default = {

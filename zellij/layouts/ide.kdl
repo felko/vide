@@ -50,9 +50,6 @@ layout {
   }
 }
 
-on_force_close "quit"
-pane_frames false
-
 keybinds {
   normal {
 		// I have an AZERTY keyboard, adjust if needed
