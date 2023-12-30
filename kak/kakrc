@@ -9,7 +9,8 @@ set-option global ui_options \
     terminal_enable_mouse=true \
     terminal_change_colors=true \
     terminal_padding_char=
-source @theme@
+
+colorscheme vide-light
 
 add-highlighter global/ number-lines -relative
 
@@ -55,13 +56,13 @@ map -docstring "eval" global user e ': enter-user-mode eval<ret>'
 
 define-command -docstring 'Select a file to open' file-select %{
     evaluate-commands %sh{
-        zellij run --close-on-exit --floating --cwd $(dirname "$kak_buffile") --name select -- @selectFile@ $kak_session $kak_client
+        @zellij@ run --close-on-exit --floating --cwd $(dirname "$kak_buffile") --name select -- @selectFile@ $kak_session $kak_client
     }
 }
 
 define-command -docstring 'Select a directory in which to cd' file-select-directory %{
     evaluate-commands %sh{
-        zellij run --close-on-exit --floating --cwd $(dirname "$kak_buffile") --name select -- @selectDirectory@ $kak_session $kak_client
+        @zellij@ run --close-on-exit --floating --cwd $(dirname "$kak_buffile") --name select -- @selectDirectory@ $kak_session $kak_client
     }
 }
 
@@ -73,14 +74,14 @@ map -docstring "cd" global file d ': file-select-directory<ret>'
 
 define-command -docstring 'Select a buffer to open' buffer-select %{
     evaluate-commands %sh{
-        zellij run --close-on-exit --floating --name select -- @selectBuffer@ $kak_session $kak_client
+        @zellij@ run --close-on-exit --floating --name select -- @selectBuffer@ $kak_session $kak_client
     }
 }
 
 map -docstring "select" global buffer b ': buffer-select<ret>'
 map -docstring "delete" global buffer q ': delete-buffer<ret>'
 map -docstring "scratch" global buffer s ': edit -scratch<ret>'
-map -docstring "debug" global buffer d ': edit -debug<ret>'
+map -docstring "debug" global buffer d ': edit -debug *debug*<ret>'
 
 
 ## eval
