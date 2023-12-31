@@ -1,1 +1,1 @@
-KKS_SESSION="$(@sessionNameGenerator@)" @kks@ edit
+KKS_SESSION=`@sessionNameGenerator@` @kks@ edit
