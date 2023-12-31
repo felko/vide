@@ -1,5 +1,5 @@
-session_name="$(@sessionNameGenerator@)"
-case "$(@kak@ -l)" in
+session_name=`@sessionNameGenerator@`
+case `@kak@ -l` in
     *"$session_name (dead)"*)
         @kak@ -clear
         session_arg="-s $session_name";;
@@ -9,4 +9,4 @@ case "$(@kak@ -l)" in
         session_arg="-s $session_name";;
 esac
 
-@kak@ $session_arg -e 'rename-client main'
+@kak@ $session_arg -e "rename-client main; execute-keys '%<a-d>'"

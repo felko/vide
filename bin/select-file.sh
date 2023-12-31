@@ -1,6 +1,6 @@
 export KKS_SESSION="$1"
 export KKS_CLIENT="$2"
-selected="$(@brootSelectFile@)"
+selected=`@brootSelectFile@ --cmd ":focus $3"`
 if [ -n "$selected" ]; then
     @kks@ send edit-or-buffer "$selected"
 else

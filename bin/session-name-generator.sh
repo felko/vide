@@ -1,1 +1,1 @@
-echo "$(basename $(pwd))" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9-'
+echo `basename $(pwd)` | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9-'
