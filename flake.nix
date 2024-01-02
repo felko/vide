@@ -57,16 +57,27 @@
               };
             };
 
-            broot = conf: pkgs.writeShellScript "vide-broot-${builtins.baseNameOf conf}.sh" ''
+            broot = conf: pkgs.writeShellScript "vide-broot-${lib.stripFileExtension conf}.sh" ''
               ${lib.getExe pkgs.broot} --conf ${conf} $@
             '';
+            substituteBroot = conf: components:
+              let
+                substitutedConf = lib.substituteComponents {
+                  name = "vide-broot-config-${builtins.baseNameOf conf}";
+									src = conf;
+									inherit components;
+                };
+              in
+              	pkgs.writeShellScript "vide-broot-${lib.stripFileExtension conf}.sh" ''
+                  ${lib.getExe pkgs.broot} --conf ${substitutedConf} $@
+                '';
           in {
             git = lib.getExe pkgs.git;
             zellij = lib.getExe pkgs.zellij;
             kak = lib.getExe pkgs.kakoune;
             broot-select-file = broot ./broot/select-file.toml;
             broot-select-directory = broot ./broot/select-directory.toml;
-            broot-file-explorer = broot ./broot/file-explorer.toml;
+            broot-file-explorer = substituteBroot ./broot/file-explorer.toml { inherit (programs) kks; };
             lazygit = lib.getExe pkgs.lazygit;
             kks = lib.getExe kks;
             fzf = lib.getExe pkgs.fzf;
@@ -105,7 +116,7 @@
               inherit (programs) kks;
             };
             copyCommand = "pbcopy";
-            inherit (programs) git zjstatus shell zellij kak;
+            inherit (programs) git zjstatus shell zellij kak kks;
             fileExplorer = programs.broot-file-explorer;
             vcsClient = programs.lazygit;
           };

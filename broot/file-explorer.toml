@@ -2,6 +2,15 @@ modal = false
 default_flags = "gI"
 syntax_theme = "Solarized (light)"
 
+
+[[verbs]]
+name = "select"
+key = "enter"
+execution = ['@kks@', 'send', 'edit-or-buffer', '{file}', '{line}']
+shortcut = "s"
+apply_to = "file"
+leave_broot = false
+
 [skin]
 # base00 base3 / base1 base2
 default = "rgb(32, 6, 58) none / rgb(147, 161, 161) none"
