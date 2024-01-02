@@ -91,10 +91,10 @@ map -docstring "debug" global buffer d ': edit -debug *debug*<ret>'
 ## eval
 
 
-define-command -docstring 'evaluate kakscript' evaluate-kakscript  %{
-  evaluate-commands -itersel %{
-    evaluate-commands %val{selection}
-  }
+define-command -docstring 'Evaluate kakscript' evaluate-kakscript  %{
+    evaluate-commands -itersel %{
+        evaluate-commands %val{selection}
+    }
 }
 
 map -docstring 'kakscript' global eval k ': evaluate-kakscript<ret>'

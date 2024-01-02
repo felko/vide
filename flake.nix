@@ -60,6 +60,7 @@
             broot = conf: pkgs.writeShellScript "vide-broot-${lib.stripFileExtension conf}.sh" ''
               ${lib.getExe pkgs.broot} --conf ${conf} $@
             '';
+
             substituteBroot = conf: components:
               let
                 substitutedConf = lib.substituteComponents {
@@ -130,15 +131,11 @@
             vcsClient = programs.lazygit;
           };
 
-        # kakoune-theme = pkgs.substituteAll {
-        # 	name = "vide-theme.kak";
-        #   src = ./theme.kak;
- 	      # };
         vide = pkgs.writeShellScriptBin "vide" ''
           export KAKOUNE_CONFIG_DIR="${config.kakoune}"
-          session_name="$(${components.sessionNameGenerator})"
-          export KKS_SESSION="$(${components.sessionNameGenerator})"
-          case "$(${programs.zellij} list-sessions --no-formatting --short)" in
+          session_name=`${components.sessionNameGenerator}`
+          export KKS_SESSION="$session_name"
+          case `${programs.zellij} list-sessions --no-formatting --short` in
               *"$session_name"*)
                   session_args="attach $session_name";;
               *)

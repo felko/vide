@@ -8,6 +8,13 @@ rec {
       components = builtins.tail (lib.strings.splitString "/" str);
     in
       builtins.concatStringsSep "-" components;
+
+  stripFileExtension = path:
+    let
+    	baseName = builtins.baseNameOf path;
+    	split = lib.strings.split "\\." baseName;
+    in
+      builtins.elemAt split 0;
       
   substituteComponents = args @ { components, ... }:
     substituteAll ((builtins.removeAttrs args ["components"]) // components);
