@@ -52,18 +52,8 @@ layout {
 
 keybinds {
   normal {
-		// I have an AZERTY keyboard, adjust if needed
-    bind "Ctrl &"  { GoToTab 1; }
-    bind "Ctrl é"  { GoToTab 2; }
-    bind "Ctrl \"" { GoToTab 3; }
-    bind "Ctrl '"  { GoToTab 4; }
-    bind "Ctrl ("  { GoToTab 5; }
-    bind "Ctrl §"  { GoToTab 6; }
-    bind "Ctrl è"  { GoToTab 7; }
-    bind "Ctrl !"  { GoToTab 8; }
-    bind "Ctrl ç"  { GoToTab 9; }
-    bind "Ctrl à"  { GoToTab 10; }
-    bind "Ctrl )"  { GoToTab 11; }
+    // bind "Alt Ctrl Left" { GoToPreviousTab; }
+    // bind "Alt Ctrl Right" { GoToNextTab; }
 
     bind "Ctrl l"  { Clear; }
   }
