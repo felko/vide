@@ -46,10 +46,12 @@ define-command edit-or-buffer -params 0.. %{
 declare-user-mode file
 declare-user-mode buffer
 declare-user-mode eval
+declare-user-mode clipboard
 
 map -docstring "file" global user f ': enter-user-mode file<ret>'
 map -docstring "buffer" global user b ': enter-user-mode buffer<ret>'
 map -docstring "eval" global user e ': enter-user-mode eval<ret>'
+map -docstring "clipboard" global user c ': enter-user-mode clipboard<ret>'
 
 map -docstring "dash" global user <space> ': file-select<ret>'
 
@@ -96,3 +98,46 @@ define-command -docstring 'evaluate kakscript' evaluate-kakscript  %{
 }
 
 map -docstring 'kakscript' global eval k ': evaluate-kakscript<ret>'
+
+
+## clipboard
+
+declare-option str clipboard_copy_command "@copyCommand@"
+declare-option str clipboard_paste_command "@pasteCommand@"
+
+# hook global RegisterModified '"' %{ nop %sh{
+#     printf %s "$kak_main_reg_dquote" | $kak_opt_clipboard_copy_command
+# }}
+
+define-command -override -docstring 'Yank selection to system clipboard' clipboard-yank %{
+    execute-keys <a-|> %opt{clipboard_copy_command}<ret>
+}
+
+define-command -docstring 'Paste system clipboard before cursor' clipboard-paste-before-cursor %{
+    execute-keys ! %opt{clipboard_paste_command}<ret>
+}
+
+define-command -docstring 'Paste system clipboard after cursor' clipboard-paste-after-cursor %{
+    execute-keys <a-!> %opt{clipboard_paste_command}<ret>
+}
+
+define-command -docstring 'Cut selection into system clipboard' clipboard-cut %{
+    execute-keys <a-!>
+}
+
+define-command -docstring 'Replace selection with system clipboard contents' clipboard-replace %{
+    execute-keys <a-d>! %opt{clipboard_paste_command}<ret>
+}
+
+define-command -docstring 'Synchronize clipboard with system clipboard' clipboard-sync %{
+    nop %sh{
+        printf %s "$kak_main_reg_dquote" | $kak_opt_clipboard_copy_command
+    }
+}
+
+map global clipboard y -docstring 'yank'                                ': clipboard-yank<ret>'
+map global clipboard P -docstring 'paste before cursor'                 ': clipboard-paste-before-cursor<ret>'
+map global clipboard p -docstring 'paste after cursor'                  ': clipboard-paste-after-cursor<ret>'
+map global clipboard d -docstring 'cut'                                 ': clipboard-cut<ret>'
+map global clipboard R -docstring 'replace'                             ': clipboard-replace<ret>'
+map global clipboard s -docstring 'load dquote register into clipboard' ': clipboard-sync<ret>'

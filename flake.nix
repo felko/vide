@@ -115,7 +115,16 @@
               inherit sessionNameGenerator;
               inherit (programs) kks;
             };
-            copyCommand = "pbcopy";
+            copyCommand = with pkgs;
+            	if stdenv.isDarwin then
+            		"pbcopy"
+            	else
+            		"${lib.getExe xsel} -i -b";
+            pasteCommand = with pkgs;
+              if stdenv.isDarwin then
+                "pbpaste"
+              else
+                "${lib.getExe xsel} -o -b";
             inherit (programs) git zjstatus shell zellij kak kks;
             fileExplorer = programs.broot-file-explorer;
             vcsClient = programs.lazygit;
