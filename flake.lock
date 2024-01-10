@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "alacritty-source": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1703967161,
+        "narHash": "sha256-e0trOAHrytFYC2Yb2q3VXUKUIVAfphUaEREkKRnL+R0=",
+        "owner": "alacritty",
+        "repo": "alacritty",
+        "rev": "2786683e0ebba6b58f7246ba0f2e4b0a6b9679b2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alacritty",
+        "repo": "alacritty",
+        "rev": "2786683e0ebba6b58f7246ba0f2e4b0a6b9679b2",
+        "type": "github"
+      }
+    },
     "crane": {
       "inputs": {
         "nixpkgs": [
@@ -90,6 +107,7 @@
     },
     "root": {
       "inputs": {
+        "alacritty-source": "alacritty-source",
         "flake-utils": "flake-utils",
         "kks-source": "kks-source",
         "nixpkgs": "nixpkgs",

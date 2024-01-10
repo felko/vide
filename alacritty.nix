@@ -1,4 +1,6 @@
-{ stdenv
+{ alacritty-source
+
+, stdenv
 , lib
 , fetchFromGitHub
 , fetchpatch
@@ -52,12 +54,7 @@ rustPlatform.buildRustPackage rec {
   pname = "alacritty";
   version = "0.14.0-dev";
 
-  src = fetchFromGitHub {
-    owner = "alacritty";
-    repo = pname;
-    rev = "2786683e0ebba6b58f7246ba0f2e4b0a6b9679b2";
-    hash = "sha256-e0trOAHrytFYC2Yb2q3VXUKUIVAfphUaEREkKRnL+R0=";
-  };
+  src = alacritty-source;
 
   cargoHash = "sha256-Mlvu+wzIo7HL+N8MkJ5hgqgA2gseCqJJNF+Imv/zsKA=";
 

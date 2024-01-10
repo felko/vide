@@ -15,6 +15,11 @@
       url = "github:kkga/kks";
       flake = false;
     };
+
+    alacritty-source = {
+      url = "github:alacritty/alacritty/2786683e0ebba6b58f7246ba0f2e4b0a6b9679b2";
+      flake = false;
+    };
   };
 
   outputs = inputs @ { self, nixpkgs, flake-utils, zjstatus-source, kks-source, ... }:
@@ -67,6 +72,7 @@
             '';
 
             alacritty = pkgs.callPackage ./alacritty.nix {
+              inherit (inputs) alacritty-source;
               inherit (pkgs.darwin.apple_sdk.frameworks) AppKit CoreGraphics CoreServices CoreText Foundation OpenGL;
             };
 
