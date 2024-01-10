@@ -154,6 +154,9 @@
           fi
         '';
 
+        vide = pkgs.callPackage ./vide.nix {
+          inherit components programs config;
+        };
       in {
         apps.default = {
           type = "app";
