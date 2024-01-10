@@ -6,7 +6,7 @@ syntax_theme = "Solarized (light)"
 [[verbs]]
 name = "select"
 key = "enter"
-execution = ['@kks@', 'send', 'edit-or-buffer', '{file}', '{line}']
+execution = ['@editorOpen@', '{file}', '{line}']
 shortcut = "s"
 apply_to = "file"
 leave_broot = false
