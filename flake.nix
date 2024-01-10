@@ -131,9 +131,11 @@
                 "pbpaste"
               else
                 "${lib.getExe xsel} -o -b";
-            inherit (programs) git zjstatus shell zellij kak kks;
+            inherit (programs) git zjstatus shell zellij kak kks lazygit;
             fileExplorer = programs.broot-file-explorer;
-            vcsClient = programs.lazygit;
+            vcsClient = substituteScript ./bin/vcs-client.sh {
+							inherit (programs) lazygit;
+            };
           };
 
         vide-script = pkgs.writeShellScriptBin "vide" ''
