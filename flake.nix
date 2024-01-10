@@ -40,9 +40,9 @@
             inherit components;
           };
           lazygit = lib.substituteComponentsRecursively {
-						name = "vide-lazygit-config";
-						dir = ./lazygit;
-						inherit components;
+            name = "vide-lazygit-config";
+            dir = ./lazygit;
+            inherit components;
           };
         };
 
@@ -80,11 +80,11 @@
               let
                 substitutedConf = lib.substituteComponents {
                   name = "vide-broot-config-${builtins.baseNameOf conf}";
-									src = conf;
-									inherit components;
+                  src = conf;
+                  inherit components;
                 };
               in
-              	pkgs.writeShellScript "vide-broot-${lib.stripFileExtension conf}.sh" ''
+                pkgs.writeShellScript "vide-broot-${lib.stripFileExtension conf}.sh" ''
                   ${lib.getExe pkgs.broot} --conf ${substitutedConf} "$@"
                 '';
           in {
@@ -134,10 +134,10 @@
             };
             scrollbackEditor = editorOpen;
             copyCommand = with pkgs;
-            	if stdenv.isDarwin then
-            		"pbcopy"
-            	else
-            		"${lib.getExe xsel} -i -b";
+              if stdenv.isDarwin then
+                "pbcopy"
+              else
+                "${lib.getExe xsel} -i -b";
             pasteCommand = with pkgs;
               if stdenv.isDarwin then
                 "pbpaste"
@@ -146,7 +146,7 @@
             inherit (programs) git zjstatus shell zellij kak kks lazygit;
             fileExplorer = programs.broot-file-explorer;
             vcsClient = substituteScript ./bin/vcs-client.sh {
-							inherit (programs) lazygit;
+              inherit (programs) lazygit;
             };
           };
 

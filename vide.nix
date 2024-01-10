@@ -26,10 +26,14 @@ stdenv.mkDerivation rec {
             session_args="--session $session_name";;
     esac
     cmd="${programs.zellij} --config-dir ${config.zellij} $session_args; ${programs.zellij} kill-session $session_name; ${programs.kak} -clear"
+    title="vide [$session_name]"
     if [ -t 0 ]; then
-      eval $cmd
+        eval "$cmd"
+        if [ -n "$ALACRITTY_WINDOW_ID" ]; then
+            ${programs.alacritty} msg config --window-id $ALACRITTY_WINDOW_ID window.title="$title"
+        fi
     else
-      ${programs.alacritty} --command $SHELL -c "$cmd"
+        ${programs.alacritty} --title "$title" --working-dir /home/joseph/code/vide --command $SHELL -c "$cmd"
     fi
   '';
 
@@ -39,14 +43,11 @@ stdenv.mkDerivation rec {
 
   installPhase =
     lib.optionalString stdenv.isDarwin ''
-      mkdir -p $out/bin
-      cp "${src}" "$out/bin/${pname}"
-      chmod +x "$out/bin/${pname}"
-      mkdir -p "$out/Applications/${pname}.app/Contents/MacOS"
-      makeWrapper "${src}" "$out/Applications/${pname}.app/Contents/MacOS/${pname}"
-      mkdir -p "$out/Applications/${pname}.app/Contents/Resources"
-      cp "${./icon/icon.icns}" "$out/Applications/${pname}.app/Contents/Resources/${pname}.icns"
-      cp "${./Info.plist}" "$out/Applications/${pname}.app/Contents/Info.plist"
+      install -Dm755 "$src" "$out/bin/${pname}"
+
+      install -Dm644 ${./Info.plist} $out/Applications/${pname}.app/Contents/Info.plist
+      install -Dm755 $src $out/Applications/${pname}.app/Contents/MacOS/vide
+      install -Dm644 ${./icon/icon.icns} $out/Applications/${pname}.app/Contents/Resources/vide.icns
     '';      
 
   meta = with lib; {
