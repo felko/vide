@@ -61,6 +61,10 @@
               ${lib.getExe pkgs.broot} --conf ${conf} $@
             '';
 
+            alacritty = pkgs.callPackage ./alacritty.nix {
+              inherit (pkgs.darwin.apple_sdk.frameworks) AppKit CoreGraphics CoreServices CoreText Foundation OpenGL;
+            };
+
             substituteBroot = conf: components:
               let
                 substitutedConf = lib.substituteComponents {
@@ -73,6 +77,7 @@
                   ${lib.getExe pkgs.broot} --conf ${substitutedConf} $@
                 '';
           in {
+            alacritty = lib.getExe alacritty;
             git = lib.getExe pkgs.git;
             zellij = lib.getExe pkgs.zellij;
             kak = lib.getExe pkgs.kakoune;
@@ -131,7 +136,7 @@
             vcsClient = programs.lazygit;
           };
 
-        vide = pkgs.writeShellScriptBin "vide" ''
+        vide-script = pkgs.writeShellScriptBin "vide" ''
           export KAKOUNE_CONFIG_DIR="${config.kakoune}"
           session_name=`${components.sessionNameGenerator}`
           export KKS_SESSION="$session_name"
@@ -141,8 +146,14 @@
               *)
                   session_args="--session $session_name";;
           esac
-          ${programs.zellij} --config-dir "${config.zellij}" $session_args
+          cmd="${programs.zellij} --config-dir ${config.zellij} $session_args"
+          if [ -t 0 ]; then
+            eval $cmd
+          else
+            ${programs.alacritty} --command $SHELL -c "$cmd"
+          fi
         '';
+
       in {
         apps.default = {
           type = "app";
