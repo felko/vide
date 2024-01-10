@@ -60,13 +60,13 @@ map -docstring "dash" global user <space> ': file-select<ret>'
 
 define-command -docstring 'Select a file to open' file-select %{
     evaluate-commands %sh{
-        @zellij@ run --close-on-exit --floating --name select -- @selectFile@ $kak_session $kak_client $(dirname "$kak_buffile")
+        @zellij@ run --close-on-exit --floating --name select -- @selectFile@ "$kak_buffile"
     }
 }
 
 define-command -docstring 'Select a directory in which to cd' file-select-directory %{
     evaluate-commands %sh{
-        @zellij@ run --close-on-exit --floating --name select -- @selectDirectory@ $kak_session $kak_client $(dirname "$kak_buffile")
+        @zellij@ run --close-on-exit --floating --name select -- @selectDirectory@ "$kak_buffile"
     }
 }
 

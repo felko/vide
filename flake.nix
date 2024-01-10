@@ -63,7 +63,7 @@
             };
 
             broot = conf: pkgs.writeShellScript "vide-broot-${lib.stripFileExtension conf}.sh" ''
-              ${lib.getExe pkgs.broot} --conf ${conf} $@
+              ${lib.getExe pkgs.broot} --conf ${conf} "$@"
             '';
 
             alacritty = pkgs.callPackage ./alacritty.nix {
@@ -79,7 +79,7 @@
                 };
               in
               	pkgs.writeShellScript "vide-broot-${lib.stripFileExtension conf}.sh" ''
-                  ${lib.getExe pkgs.broot} --conf ${substitutedConf} $@
+                  ${lib.getExe pkgs.broot} --conf ${substitutedConf} "$@"
                 '';
           in {
             alacritty = lib.getExe alacritty;
@@ -88,7 +88,7 @@
             kak = lib.getExe pkgs.kakoune;
             broot-select-file = broot ./broot/select-file.toml;
             broot-select-directory = broot ./broot/select-directory.toml;
-            broot-file-explorer = substituteBroot ./broot/file-explorer.toml { inherit (programs) kks; };
+            broot-file-explorer = substituteBroot ./broot/file-explorer.toml { inherit (programs) kks; inherit (components) editorOpen; };
             lazygit = lib.getExe pkgs.lazygit;
             kks = lib.getExe kks;
             fzf = lib.getExe pkgs.fzf;
@@ -121,7 +121,7 @@
             };
             selectDirectory = substituteScript ./bin/select-directory.sh {
               inherit (programs) kks;
-              brootSelectDirectory = programs.broot-select-directory;
+              brootSelectFile = programs.broot-select-directory;
             };
             selectBuffer = substituteScript ./bin/select-buffer.sh {
               inherit (programs) fzf kks;
