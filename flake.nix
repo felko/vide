@@ -126,10 +126,7 @@
             selectBuffer = substituteScript ./bin/select-buffer.sh {
               inherit (programs) fzf kks;
             };
-            scrollbackEditor = substituteScript ./bin/edit.sh {
-              inherit sessionNameGenerator;
-              inherit (programs) kks;
-            };
+            scrollbackEditor = editorOpen;
             copyCommand = with pkgs;
             	if stdenv.isDarwin then
             		"pbcopy"
