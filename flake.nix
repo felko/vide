@@ -147,26 +147,6 @@
             };
           };
 
-        vide-script = pkgs.writeShellScriptBin "vide" ''
-          export KAKOUNE_CONFIG_DIR="${config.kakoune}"
-          session_name=`${components.sessionNameGenerator}`
-          export KKS_SESSION="$session_name"
-          export KKS_CLIENT="main"
-          export EDITOR="${components.editorOpen}"
-          case `${programs.zellij} list-sessions --no-formatting --short` in
-              *"$session_name"*)
-                  session_args="attach $session_name";;
-              *)
-                  session_args="--session $session_name";;
-          esac
-          cmd="${programs.zellij} --config-dir ${config.zellij} $session_args"
-          if [ -t 0 ]; then
-            eval $cmd
-          else
-            ${programs.alacritty} --command $SHELL -c "$cmd"
-          fi
-        '';
-
         vide = pkgs.callPackage ./vide.nix {
           inherit components programs config;
         };

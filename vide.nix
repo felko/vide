@@ -13,26 +13,24 @@ stdenv.mkDerivation rec {
   version = "0.1.0";
 
   src = writeShellScript "vide" ''
-      export KAKOUNE_CONFIG_DIR="${config.kakoune}"
-      session_name=`${components.sessionNameGenerator}`
-      export KKS_SESSION="$session_name"
-      export KKS_CLIENT="main"
-      export EDITOR="${components.editorOpen}"
-      case `${programs.zellij} list-sessions --no-formatting --short` in
-          *"$session_name"*)
-              session_args="attach $session_name";;
-          *)
-              session_args="--session $session_name";;
-      esac
-      cmd="${programs.zellij} --config-dir ${config.zellij} $session_args"
-      echo editor: $EDITOR
-      echo cmd: $cmd
-      if [ -t 0 ]; then
-        eval $cmd
-      else
-        ${programs.alacritty} --command $SHELL -c "$cmd"
-      fi
+    export KAKOUNE_CONFIG_DIR="${config.kakoune}"
     export LG_CONFIG_FILE="${config.lazygit}/config.yml"
+    session_name=`${components.sessionNameGenerator}`
+    export KKS_SESSION="$session_name"
+    export KKS_CLIENT="main"
+    export EDITOR="${components.editorOpen}"
+    case `${programs.zellij} list-sessions --no-formatting --short` in
+        *"$session_name"*)
+            session_args="attach $session_name";;
+        *)
+            session_args="--session $session_name";;
+    esac
+    cmd="${programs.zellij} --config-dir ${config.zellij} $session_args; ${programs.zellij} kill-session $session_name; ${programs.kak} -clear"
+    if [ -t 0 ]; then
+      eval $cmd
+    else
+      ${programs.alacritty} --command $SHELL -c "$cmd"
+    fi
   '';
 
   nativeBuildInputs = [ makeWrapper ];
