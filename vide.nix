@@ -32,6 +32,7 @@ stdenv.mkDerivation rec {
       else
         ${programs.alacritty} --command $SHELL -c "$cmd"
       fi
+    export LG_CONFIG_FILE="${config.lazygit}/config.yml"
   '';
 
   nativeBuildInputs = [ makeWrapper ];

@@ -34,6 +34,11 @@
             dir = ./zellij;
             inherit components;
           };
+          lazygit = lib.substituteComponentsRecursively {
+						name = "vide-lazygit-config";
+						dir = ./lazygit;
+						inherit components;
+          };
         };
 
         programs =
@@ -108,7 +113,7 @@
             };
             editorOpen = substituteScript ./bin/editor-open.sh {
               inherit sessionNameGenerator;
-              inherit (programs) kks;
+              inherit (programs) zellij kks;
             };
             selectFile = substituteScript ./bin/select-file.sh {
               inherit (programs) kks;
