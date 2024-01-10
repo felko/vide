@@ -2,6 +2,8 @@ imports: [
 	@brootCommonConfig@
 ]
 
+default_flags: -gihpsd
+
 verbs: [
 	{
     name: select

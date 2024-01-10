@@ -92,7 +92,7 @@
             kak = lib.getExe pkgs.kakoune;
             broot-select-file = substituteBroot ./broot/select-file.hjson {};
             broot-select-directory = substituteBroot ./broot/select-directory.hjson {};
-            broot-file-explorer = substituteBroot ./broot/file-explorer.hjson { inherit (programs) kks; inherit (components) editorOpen; };
+            broot-file-explorer = substituteBroot ./broot/file-explorer.hjson { inherit (components) editorOpen; };
             lazygit = lib.getExe pkgs.lazygit;
             kks = lib.getExe kks;
             fzf = lib.getExe pkgs.fzf;

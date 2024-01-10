@@ -1,7 +1,7 @@
 if [ -f "$1" ]; then
-    selected=`@brootSelectDirectory@ --only-folders --cmd ":select $(dirname $1)"`
+    selected=`@brootSelectDirectory@ --cmd ":select $(dirname $1)"`
 else
-    selected=`@brootSelectDirectory@ --only-folders`
+    selected=`@brootSelectDirectory@`
 fi
 if [ -n "$selected" ]; then
     @kks@ send change-directory "$selected"

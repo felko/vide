@@ -2,7 +2,7 @@ imports: [
 	@brootCommonConfig@
 ]
 
-default_flags: --only-folders --git-ignore --hidden
+default_flags: -ghif
 
 verbs: [
 	{

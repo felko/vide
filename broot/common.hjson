@@ -1,6 +1,11 @@
 modal: false
-default_flags: -gI
 syntax_theme: Solarized (light)
+
+special_paths: {
+    "**/.git": hide
+    "**/.direnv": hide
+    "/nix/store": no-enter
+}
 
 skin: {
     # base00 base3 / base1 base2
