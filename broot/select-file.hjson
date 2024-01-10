@@ -1,0 +1,17 @@
+imports: [
+	@brootCommonConfig@
+]
+
+default_flags: --git-ignored --hidden
+
+verbs: [
+	{
+    name: select
+    key: enter
+    execution: echo {file} {line}
+    shortcut: s
+    apply_to: file
+    leave_broot: true
+  }
+]
+

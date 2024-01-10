@@ -1,0 +1,17 @@
+imports: [
+	@brootCommonConfig@
+]
+
+default_flags: --only-folders --git-ignore --hidden
+
+verbs: [
+	{
+    name: select
+    key: enter
+    execution: echo {directory}
+    shortcut: s
+    apply_to: directory
+    leave_broot: true
+  }
+]
+

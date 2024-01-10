@@ -67,10 +67,6 @@
               };
             };
 
-            broot = conf: pkgs.writeShellScript "vide-broot-${lib.stripFileExtension conf}.sh" ''
-              ${lib.getExe pkgs.broot} --conf ${conf} "$@"
-            '';
-
             alacritty = pkgs.callPackage ./alacritty.nix {
               inherit (inputs) alacritty-source;
               inherit (pkgs.darwin.apple_sdk.frameworks) AppKit CoreGraphics CoreServices CoreText Foundation OpenGL;
@@ -81,7 +77,9 @@
                 substitutedConf = lib.substituteComponents {
                   name = "vide-broot-config-${builtins.baseNameOf conf}";
                   src = conf;
-                  inherit components;
+                  components = components // {
+                    brootCommonConfig = ./broot/common.hjson;
+                  };
                 };
               in
                 pkgs.writeShellScript "vide-broot-${lib.stripFileExtension conf}.sh" ''
@@ -92,9 +90,9 @@
             git = lib.getExe pkgs.git;
             zellij = lib.getExe pkgs.zellij;
             kak = lib.getExe pkgs.kakoune;
-            broot-select-file = broot ./broot/select-file.toml;
-            broot-select-directory = broot ./broot/select-directory.toml;
-            broot-file-explorer = substituteBroot ./broot/file-explorer.toml { inherit (programs) kks; inherit (components) editorOpen; };
+            broot-select-file = substituteBroot ./broot/select-file.hjson {};
+            broot-select-directory = substituteBroot ./broot/select-directory.hjson {};
+            broot-file-explorer = substituteBroot ./broot/file-explorer.hjson { inherit (programs) kks; inherit (components) editorOpen; };
             lazygit = lib.getExe pkgs.lazygit;
             kks = lib.getExe kks;
             fzf = lib.getExe pkgs.fzf;

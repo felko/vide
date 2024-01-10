@@ -1,0 +1,14 @@
+imports: [
+	@brootCommonConfig@
+]
+
+verbs: [
+	{
+    name: select
+    key: enter
+    execution: @editorOpen@ {file} {line}
+    shortcut: s
+    apply_to: file
+    leave_broot: false
+  }
+]
