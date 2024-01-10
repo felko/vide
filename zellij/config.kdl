@@ -190,6 +190,12 @@ plugins {
     zjstatus { path "zjstatus"; }
 }
 
+env {
+  SESSION_NAME_GENERATOR "@sessionNameGenerator@"
+  KKS_CLIENT "main"
+  EDITOR "@editorOpen@"
+}
+
 on_force_close "quit"
 pane_frames false
 auto_layout true

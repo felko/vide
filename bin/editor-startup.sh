@@ -1,4 +1,4 @@
-session_name=`@sessionNameGenerator@`
+session_name=`eval "$SESSION_NAME_GENERATOR"`
 case `@kak@ -l` in
     *"$session_name (dead)"*)
         @kak@ -clear
