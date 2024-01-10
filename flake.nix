@@ -106,6 +106,10 @@
               inherit sessionNameGenerator;
               inherit (programs) kak;
             };
+            editorOpen = substituteScript ./bin/editor-open.sh {
+              inherit sessionNameGenerator;
+              inherit (programs) kks;
+            };
             selectFile = substituteScript ./bin/select-file.sh {
               inherit (programs) kks;
               brootSelectFile = programs.broot-select-file;
@@ -142,6 +146,8 @@
           export KAKOUNE_CONFIG_DIR="${config.kakoune}"
           session_name=`${components.sessionNameGenerator}`
           export KKS_SESSION="$session_name"
+          export KKS_CLIENT="main"
+          export EDITOR="${components.editorOpen}"
           case `${programs.zellij} list-sessions --no-formatting --short` in
               *"$session_name"*)
                   session_args="attach $session_name";;
