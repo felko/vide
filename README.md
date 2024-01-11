@@ -1,5 +1,9 @@
-vide
-====
+<h1> <img src="icon/icon.svg"
+  width="48"
+  height="48"
+  style="margin: 16px 0px 0px -16px; float: left;" />
+  vide
+</h1>
 
 A nix-powered IDE assembled from individual components, namely:
 - [kakoune](https://kakoune.org/) (editor)
