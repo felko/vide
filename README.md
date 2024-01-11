@@ -8,6 +8,8 @@ A nix-powered IDE assembled from individual components, namely:
 - [lazygit](https://github.com/jesseduffield/lazygit)
 - [zellij](https://zellij.dev/)
 
+![selecting a file by content search using broot](screenshots/editor.png)
+
 ## Motivation
 
 Thanks to Nix flakes, one can directly invoke `nix run github:felko/vide` from any computer with Nix installed with flake and nix-command experimental features.
