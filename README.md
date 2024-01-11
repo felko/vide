@@ -16,9 +16,11 @@ Thanks to Nix flakes, one can directly invoke `nix run github:felko/vide` from a
 The IDE will run and leave no trace after garbage collection.
 The configuration is completely standalone which means you will get the exact same interface regardless of any potential XDG configurations.
 
-## Intended workflow
+## Make your own
 
-The IDE is very opinionated so feel free to fork and replace with your favorite tools.
+The choice of tools and config is very opinionated and is not written in a modular way.
+Feel free to fork the repo if you want to use different tools or anything that makes it more to your liking.
+That being said, I won't accept PRs that add support for alternative tools (e.g. other editors, file explorers, etc) since this repo is intended for my personal use.
 
 ## Installation
 
