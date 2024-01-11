@@ -2,12 +2,15 @@ vide
 ====
 
 A nix-powered IDE assembled from individual components, namely:
-- [kakoune](https://kakoune.org/)
-- [fzf](https://github.com/junegunn/fzf)
-- [broot](https://dystroy.org/broot/)
-- [lazygit](https://github.com/jesseduffield/lazygit)
-- [zellij](https://zellij.dev/)
-- [zjstatus](https://github.com/dj95/zjstatus)
+- [kakoune](https://kakoune.org/) (editor)
+- [kks](https://github.com/kkga/kks) (kakoune interop tool)
+- [lazygit](https://github.com/jesseduffield/lazygit) (git client)
+- [zellij](https://zellij.dev/) (terminal multiplexer)
+- [zjstatus](https://github.com/dj95/zjstatus) (zellij status bar)
+- [alacritty](https://alacritty.org) (terminal emulator)
+- [fish](https://fishshell.com/) (shell)
+- [broot](https://dystroy.org/broot/) (file explorer/picker)
+- [fzf](https://github.com/junegunn/fzf) (picker for everything else)
 
 ![selecting a file by content search using broot](screenshots/editor.png)
 
