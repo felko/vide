@@ -35,10 +35,10 @@ While the primary purpose is to be able to run the IDE by URL as shown above, it
   };
 
   outputs = inputs @ { self, ... }: {
-    # nixosConfigurations.myconfig = nixos.lib.nixosSystem rec {
+    # darwinConfigurations.myconfig = nix-darwin.lib.darwinSystem rec {
     #   system = "aarch64-darwin";
     # or
-    darwinConfigurations.myconfig = nix-darwin.lib.darwinSystem rec {
+    nixosConfigurations.myconfig = nixos.lib.nixosSystem rec {
       system = "x86_64-linux";
       modules = [ ./configuration.nix ];
       specialArgs = {
