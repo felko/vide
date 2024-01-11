@@ -7,6 +7,7 @@ A nix-powered IDE assembled from individual components, namely:
 - [broot](https://dystroy.org/broot/)
 - [lazygit](https://github.com/jesseduffield/lazygit)
 - [zellij](https://zellij.dev/)
+- [zjstatus](https://github.com/dj95/zjstatus)
 
 ![selecting a file by content search using broot](screenshots/editor.png)
 
