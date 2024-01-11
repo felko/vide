@@ -26,7 +26,7 @@ While the primary purpose is to be able to run the IDE by URL as shown above, it
 
 ### NixOS/nix-darwin
 
-```
+```nix
 {
   inputs = {
     ...
@@ -49,7 +49,7 @@ While the primary purpose is to be able to run the IDE by URL as shown above, it
 }
 ```
 
-```
+```nix
 { pkgs, inputs, system, ... }:
 
 {
@@ -62,7 +62,7 @@ While the primary purpose is to be able to run the IDE by URL as shown above, it
 ### Home-manager
 
 
-```
+```nix
 {
   inputs = {
     ...
@@ -85,7 +85,7 @@ While the primary purpose is to be able to run the IDE by URL as shown above, it
 }
 ```
 
-```
+```nix
 { pkgs, inputs, system, ... }:
 
 {
