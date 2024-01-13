@@ -32,7 +32,7 @@ That being said, I won't accept PRs that add support for alternative tools (e.g.
 
 ## Installation
 
-While the primary purpose is to be able to run the IDE by URL as shown above, it's also possible to
+While the primary purpose is to be able to run the IDE by URL as shown above, it's also possible to install it on your system, either declaratively or imperatively.
 
 ### NixOS/nix-darwin
 
