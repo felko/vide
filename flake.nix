@@ -49,6 +49,11 @@
             dir = ./lazygit;
             inherit components;
           };
+					yazi = lib.substituteComponentsRecursively {
+						name = "vide-yazi-config";
+						dir = ./yazi;
+						inherit components;
+					};
         };
 
         programs =
@@ -92,6 +97,7 @@
             fzf = lib.getExe pkgs.fzf;
             zjstatus = "${inputs.zjstatus-source.packages.${system}.default}/bin/zjstatus.wasm";
             shell = lib.getExe pkgs.fish;
+            yazi = lib.getExe pkgs.yazi;
           };
         
         components =
@@ -138,9 +144,9 @@
                 "pbpaste"
               else
                 "${lib.getExe xsel} -o -b";
-            inherit (programs) git zjstatus shell zellij kak kks lazygit;
-            fileExplorer = programs.broot-file-explorer;
+            inherit (programs) git zjstatus shell zellij kak kks lazygit yazi;
             kaklsp = programs.kak-lsp;
+            fileExplorer = programs.yazi;
             vcsClient = substituteScript ./bin/vcs-client.sh {
               inherit (programs) lazygit;
             };
@@ -153,6 +159,10 @@
         apps.default = {
           type = "app";
           program = "${vide}/bin/vide";
+        };
+
+        devShell = pkgs.mkShell {
+          nativeBuildInputs = [ pkgs.rnix-lsp ];
         };
 
         packages.default = vide;
