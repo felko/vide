@@ -22,8 +22,8 @@
     };
 
     kak-lsp-source = {
-			url = "github:kak-lsp/kak-lsp";
-			flake = false;
+      url = "github:kak-lsp/kak-lsp";
+      flake = false;
     };
   };
 
@@ -49,11 +49,11 @@
             dir = ./lazygit;
             inherit components;
           };
-					yazi = lib.substituteComponentsRecursively {
-						name = "vide-yazi-config";
-						dir = ./yazi;
-						inherit components;
-					};
+          yazi = lib.substituteComponentsRecursively {
+            name = "vide-yazi-config";
+            dir = ./yazi;
+            inherit components;
+          };
         };
 
         programs =
@@ -67,7 +67,7 @@
 
             kak-lsp = pkgs.callPackage ./nix/kak-lsp.nix {
               src = inputs.kak-lsp-source;
-            	inherit (pkgs.darwin.apple_sdk.frameworks) CoreServices Security SystemConfiguration;
+              inherit (pkgs.darwin.apple_sdk.frameworks) CoreServices Security SystemConfiguration;
             };
 
             substituteBroot = conf: components:
