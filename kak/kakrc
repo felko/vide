@@ -14,12 +14,60 @@ colorscheme vide-light
 
 add-highlighter global/ number-lines -relative
 
+# lsp setup
+
+eval %sh{@kaklsp@ --kakoune -s $kak_session}
+lsp-enable
+
+set-option global lsp_diagnostic_line_error_sign ''
+set-option global lsp_diagnostic_line_warning_sign ''
+set-option global lsp_diagnostic_line_info_sign ''
+set-option global lsp_diagnostic_line_hint_sign ''
+
+# Faces used by inline diagnostics.
+set-face global DiagnosticError   default,default,rgb:ba3b46+c
+set-face global DiagnosticHint    default,default,rgb:306a88+c
+set-face global DiagnosticInfo    default,default,rgb:20063b+c
+set-face global DiagnosticWarning default,default,rgb:ff882d+c
+# Faces used by inlay diagnostics.
+set-face global InlayDiagnosticError   rgb:ba3b46,default+d
+set-face global InlayDiagnosticHint    rgb:306a88,default+d
+set-face global InlayDiagnosticInfo    rgb:20063b,default+d
+set-face global InlayDiagnosticWarning rgb:ff882d,default+d
+# Faces used by line flags
+set-face global LineFlagError rgb:ba3b46,default
+set-face global LineFlagHint rgb:306a88,default
+set-face global LineFlagInfo rgb:20063b,default
+set-face global LineFlagWarning rgb:ff882d,default
+# Face for highlighting references.
+set-face global Reference MatchingChar
+set-face global ReferenceBind +u@Reference
+# Face for inlay hints.
+set-face global InlayHint rgb:306a88+d
+
+define-command -override -hidden lsp-menu-impl %{
+    echo %sh{
+        zellij run --close-on-exit --floating --name select -- @selectAnything@ $@
+    }
+}
+
 
 # options
 
 set-option global tabstop 2
 set-option global scrolloff 5,10
 
+# cycle through completion candidates with tab
+
+hook global InsertCompletionShow .* %{
+    map window insert <tab> <c-n>
+    map window insert <s-tab> <c-p>
+}
+
+hook global InsertCompletionHide .* %{
+    unmap window insert <tab> <c-n>
+    unmap window insert <s-tab> <c-p>
+}
 
 # general commands
 
@@ -52,6 +100,7 @@ map -docstring "file" global user f ': enter-user-mode file<ret>'
 map -docstring "buffer" global user b ': enter-user-mode buffer<ret>'
 map -docstring "eval" global user e ': enter-user-mode eval<ret>'
 map -docstring "clipboard" global user c ': enter-user-mode clipboard<ret>'
+map -docstring "lsp" global user l ': enter-user-mode lsp<ret>'
 
 map -docstring "dash" global user <space> ': file-select<ret>'
 

@@ -20,6 +20,11 @@
       url = "github:alacritty/alacritty/2786683e0ebba6b58f7246ba0f2e4b0a6b9679b2";
       flake = false;
     };
+
+    kak-lsp-source = {
+			url = "github:kak-lsp/kak-lsp";
+			flake = false;
+    };
   };
 
   outputs = inputs @ { self, nixpkgs, flake-utils, ... }:
@@ -55,6 +60,9 @@
               inherit (pkgs.darwin.apple_sdk.frameworks) AppKit CoreGraphics CoreServices CoreText Foundation OpenGL;
             };
 
+            kak-lsp = pkgs.callPackage ./nix/kak-lsp.nix {
+              src = inputs.kak-lsp-source;
+            	inherit (pkgs.darwin.apple_sdk.frameworks) CoreServices Security SystemConfiguration;
             };
 
             substituteBroot = conf: components:
@@ -80,6 +88,7 @@
             broot-file-explorer = substituteBroot ./broot/file-explorer.hjson { inherit (components) editorOpen; };
             lazygit = lib.getExe pkgs.lazygit;
             kks = lib.getExe kks;
+            kak-lsp = lib.getExe kak-lsp;
             fzf = lib.getExe pkgs.fzf;
             zjstatus = "${inputs.zjstatus-source.packages.${system}.default}/bin/zjstatus.wasm";
             shell = lib.getExe pkgs.fish;
@@ -112,6 +121,9 @@
               inherit (programs) kks;
               brootSelectFile = programs.broot-select-directory;
             };
+            selectAnything = substituteScript ./bin/select-anything.sh {
+              inherit (programs) fzf;
+            };
             selectBuffer = substituteScript ./bin/select-buffer.sh {
               inherit (programs) fzf kks;
             };
@@ -128,6 +140,7 @@
                 "${lib.getExe xsel} -o -b";
             inherit (programs) git zjstatus shell zellij kak kks lazygit;
             fileExplorer = programs.broot-file-explorer;
+            kaklsp = programs.kak-lsp;
             vcsClient = substituteScript ./bin/vcs-client.sh {
               inherit (programs) lazygit;
             };

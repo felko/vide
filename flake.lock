@@ -74,6 +74,22 @@
         "type": "github"
       }
     },
+    "kak-lsp-source": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1704911363,
+        "narHash": "sha256-sf+9B/ImAk96LLLhII8chRPZ03B5BVnfy/vIc2qlN+U=",
+        "owner": "kak-lsp",
+        "repo": "kak-lsp",
+        "rev": "f42ebfacc0750acf3303bb9b876b38bf84a59cf7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kak-lsp",
+        "repo": "kak-lsp",
+        "type": "github"
+      }
+    },
     "kks-source": {
       "flake": false,
       "locked": {
@@ -109,6 +125,7 @@
       "inputs": {
         "alacritty-source": "alacritty-source",
         "flake-utils": "flake-utils",
+        "kak-lsp-source": "kak-lsp-source",
         "kks-source": "kks-source",
         "nixpkgs": "nixpkgs",
         "zjstatus-source": "zjstatus-source"
