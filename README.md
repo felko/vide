@@ -13,8 +13,9 @@ A nix-powered IDE assembled from individual components, namely:
 - [zjstatus](https://github.com/dj95/zjstatus) (zellij status bar)
 - [alacritty](https://alacritty.org) (terminal emulator)
 - [fish](https://fishshell.com/) (shell)
-- [broot](https://dystroy.org/broot/) (file explorer/picker)
+- [broot](https://dystroy.org/broot/) (file picker)
 - [fzf](https://github.com/junegunn/fzf) (picker for everything else)
+- [yazi](https://github.com/sxyazi/yazi) (file explorer)
 
 ![selecting a file by content search using broot](screenshots/editor.png)
 
