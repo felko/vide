@@ -22,11 +22,11 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, flake-utils, zjstatus-source, kks-source, ... }:
+  outputs = inputs @ { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        lib = pkgs.lib // import ./lib.nix { inherit pkgs; };
+        lib = pkgs.lib // import ./nix/lib.nix { inherit pkgs; };
 
         config = {
           kakoune = lib.substituteComponentsRecursively {
@@ -48,28 +48,13 @@
 
         programs =
           let
-            kks = pkgs.buildGoModule rec {
-              pname = "kks";
-              version = "v0.3.8";
-              src = kks-source;
+            kks = pkgs.callPackage ./nix/kks.nix { src = inputs.kks-source; };
 
-              vendorHash = "sha256-E4D9FGTpS9NkZy6tmnuI/F4dnO9bv8MVaRstxVPvEfo=";
-              subPackages = [ "." ];
-
-              ldflags = [ "-X main.version=${version}" "-X main.buildSource=nix" ];
-
-              postInstall = ''
-                install -Dm555 scripts/kks-* -t $out/bin
-              '';
-
-              meta = {
-                mainProgram = "kks";
-              };
+            alacritty = pkgs.callPackage ./nix/alacritty.nix {
+              src = inputs.alacritty-source;
+              inherit (pkgs.darwin.apple_sdk.frameworks) AppKit CoreGraphics CoreServices CoreText Foundation OpenGL;
             };
 
-            alacritty = pkgs.callPackage ./alacritty.nix {
-              inherit (inputs) alacritty-source;
-              inherit (pkgs.darwin.apple_sdk.frameworks) AppKit CoreGraphics CoreServices CoreText Foundation OpenGL;
             };
 
             substituteBroot = conf: components:
@@ -96,7 +81,7 @@
             lazygit = lib.getExe pkgs.lazygit;
             kks = lib.getExe kks;
             fzf = lib.getExe pkgs.fzf;
-            zjstatus = "${zjstatus-source.packages.${system}.default}/bin/zjstatus.wasm";
+            zjstatus = "${inputs.zjstatus-source.packages.${system}.default}/bin/zjstatus.wasm";
             shell = lib.getExe pkgs.fish;
           };
         
@@ -148,7 +133,7 @@
             };
           };
 
-        vide = pkgs.callPackage ./vide.nix {
+        vide = pkgs.callPackage ./nix/vide.nix {
           inherit components programs config;
         };
       in {

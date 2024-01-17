@@ -15,6 +15,7 @@ stdenv.mkDerivation rec {
   src = writeShellScript "vide" ''
     export KAKOUNE_CONFIG_DIR="${config.kakoune}"
     export LG_CONFIG_FILE="${config.lazygit}/config.yml"
+    export YAZI_CONFIG_HOME="${config.yazi}"
     session_name=`${components.sessionNameGenerator}`
     export KKS_SESSION="$session_name"
     export KKS_CLIENT="main"
@@ -45,9 +46,9 @@ stdenv.mkDerivation rec {
     lib.optionalString stdenv.isDarwin ''
       install -Dm755 "$src" "$out/bin/${pname}"
 
-      install -Dm644 ${./Info.plist} $out/Applications/${pname}.app/Contents/Info.plist
+      install -Dm644 ${../Info.plist} $out/Applications/${pname}.app/Contents/Info.plist
       install -Dm755 $src $out/Applications/${pname}.app/Contents/MacOS/vide
-      install -Dm644 ${./icon/icon.icns} $out/Applications/${pname}.app/Contents/Resources/vide.icns
+      install -Dm644 ${../icon/icon.icns} $out/Applications/${pname}.app/Contents/Resources/vide.icns
     '';      
 
   meta = with lib; {

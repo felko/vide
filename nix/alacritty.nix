@@ -1,4 +1,4 @@
-{ alacritty-source
+{ src
 
 , stdenv
 , lib
@@ -54,7 +54,7 @@ rustPlatform.buildRustPackage rec {
   pname = "alacritty";
   version = "0.14.0-dev";
 
-  src = alacritty-source;
+  inherit src;
 
   cargoHash = "sha256-Mlvu+wzIo7HL+N8MkJ5hgqgA2gseCqJJNF+Imv/zsKA=";
 
