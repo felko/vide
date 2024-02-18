@@ -92,7 +92,7 @@
             broot-select-directory = substituteBroot ./broot/select-directory.hjson {};
             lazygit = lib.getExe pkgs.lazygit;
             kks = lib.getExe kks;
-            kak-lsp = lib.getExe kak-lsp;
+            kak-lsp = "${lib.getExe kak-lsp} --config ${./kak-lsp/kak-lsp.toml}";
             fzf = lib.getExe pkgs.fzf;
             zjstatus = "${inputs.zjstatus-source.packages.${system}.default}/bin/zjstatus.wasm";
             shell = lib.getExe pkgs.fish;
