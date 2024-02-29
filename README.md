@@ -87,7 +87,7 @@ While the primary purpose is to be able to run the IDE by URL as shown above, it
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      homeConfigurations.joseph = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.<user> = home-manager.lib.homeManagerConfiguration {
         ...
         extraSpecialArgs = {
           inherit inputs system;
