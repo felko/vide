@@ -16,6 +16,9 @@ stdenv.mkDerivation rec {
     export KAKOUNE_CONFIG_DIR="${config.kakoune}"
     export LG_CONFIG_FILE="${config.lazygit}/config.yml"
     export YAZI_CONFIG_HOME="${config.yazi}"
+    if [ -n "$1" ]; then
+        cd "$1"
+    fi
     session_name=`${components.sessionNameGenerator}`
     export KKS_SESSION="$session_name"
     export KKS_CLIENT="main"
@@ -26,16 +29,19 @@ stdenv.mkDerivation rec {
         *)
             session_args="--session $session_name";;
     esac
-    cmd="${programs.zellij} --config-dir ${config.zellij} $session_args; ${programs.zellij} kill-session $session_name; ${programs.kak} -clear"
+    cmd="${programs.zellij} --config-dir ${config.zellij} $session_args"
     title="vide [$session_name]"
     if [ -t 0 ]; then
-        eval "$cmd"
         if [ -n "$ALACRITTY_WINDOW_ID" ]; then
-            ${programs.alacritty} msg config --window-id $ALACRITTY_WINDOW_ID window.title="$title"
+            option="window.title=\"$title\""
+            ${programs.alacritty} msg config --window-id $ALACRITTY_WINDOW_ID "$option"
         fi
+        eval "$cmd"
     else
-        ${programs.alacritty} --title "$title" --working-dir /home/joseph/code/vide --command $SHELL -c "$cmd"
+        ${programs.alacritty} --title "$title" --working-dir `pwd` --command sh -c "$cmd"
     fi
+    ${programs.zellij} kill-session $session_name
+    ${programs.kak} -clear
   '';
 
   nativeBuildInputs = [ makeWrapper ];
@@ -49,7 +55,7 @@ stdenv.mkDerivation rec {
       install -Dm644 ${../Info.plist} $out/Applications/${pname}.app/Contents/Info.plist
       install -Dm755 $src $out/Applications/${pname}.app/Contents/MacOS/vide
       install -Dm644 ${../icon/icon.icns} $out/Applications/${pname}.app/Contents/Resources/vide.icns
-    '';      
+    '';
 
   meta = with lib; {
     description = "A IDE made out of UNIX programs";
@@ -58,4 +64,3 @@ stdenv.mkDerivation rec {
     platforms = platforms.unix;
   };
 }
-
