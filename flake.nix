@@ -58,6 +58,7 @@
 
         programs =
           let
+            zjstatus = inputs.zjstatus-source.packages.${system}.default;
             kks = pkgs.callPackage ./nix/kks.nix { src = inputs.kks-source; };
 
             alacritty = pkgs.callPackage ./nix/alacritty.nix {
@@ -94,7 +95,7 @@
             kks = lib.getExe kks;
             kak-lsp = "${lib.getExe kak-lsp} --config ${./kak-lsp/kak-lsp.toml}";
             fzf = lib.getExe pkgs.fzf;
-            zjstatus = "${inputs.zjstatus-source.packages.${system}.default}/bin/zjstatus.wasm";
+            zjstatus = "${zjstatus}/bin/zjstatus.wasm";
             shell = lib.getExe pkgs.fish;
             yazi = lib.getExe pkgs.yazi;
             rg = lib.getExe pkgs.ripgrep;
@@ -145,6 +146,7 @@
               else
                 "${lib.getExe xsel} -o -b";
             inherit (programs) git shell zellij kak kks lazygit yazi rg;
+            zellijStatus = programs.zjstatus;
             kaklsp = programs.kak-lsp;
             fileExplorer = programs.yazi;
             vcsClient = substituteScript ./bin/vcs-client.sh {

@@ -3,7 +3,7 @@ layout {
     children
 
     pane size=1 borderless=true {
-      plugin location="file:@zjstatus@" {
+      plugin location="file:@zellijStatus@" {
         format_left  "{mode} #[fg=#89B4FA,bold] {tabs}"
         format_right "{session}"
         format_space ""
@@ -35,7 +35,7 @@ layout {
       }
     }
   }
-  
+
   tab name="file" {
     pane name="main" command="@fileExplorer@"
   }
