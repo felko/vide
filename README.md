@@ -16,6 +16,7 @@ A nix-powered IDE assembled from individual components, namely:
 - [broot](https://dystroy.org/broot/) (file picker)
 - [fzf](https://github.com/junegunn/fzf) (picker for everything else)
 - [yazi](https://github.com/sxyazi/yazi) (file explorer)
+- [ripgrep](https://github.com/BurntSushi/ripgrep) (git-aware grep alternative)
 
 ![selecting a file by content search using broot](screenshots/editor.png)
 
