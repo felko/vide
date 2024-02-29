@@ -131,6 +131,8 @@ map -docstring "delete" global buffer q ': delete-buffer<ret>'
 map -docstring "scratch" global buffer s ': edit -scratch<ret>'
 map -docstring "debug" global buffer d ': edit -debug *debug*<ret>'
 
+map -docstring "delete buffer" global normal <c-w> ': delete-buffer<ret>'
+map -docstring "delete buffer" global insert <c-w> ': delete-buffer<ret>'
 
 ## eval
 
