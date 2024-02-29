@@ -7,10 +7,10 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "kak-lsp";
-  version = "14.2.0";
+  version = "16.0.0";
 	inherit src;
 
-  cargoSha256 = "sha256-qLeZ896aPfuQWbm4Y15suiPqT3agk379k413fWz3adg=";
+  cargoSha256 = "sha256-c7mjnvspaX9maYAzUL3pPQw9XBpduGk2TO8XjCHPV7I";
 
   buildInputs = lib.optionals stdenv.isDarwin [ CoreServices Security SystemConfiguration ];
 
