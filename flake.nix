@@ -97,6 +97,7 @@
             zjstatus = "${inputs.zjstatus-source.packages.${system}.default}/bin/zjstatus.wasm";
             shell = lib.getExe pkgs.fish;
             yazi = lib.getExe pkgs.yazi;
+            rg = lib.getExe pkgs.ripgrep;
           };
         
         components =
@@ -127,7 +128,7 @@
               brootSelectFile = programs.broot-select-directory;
             };
             selectAnything = substituteScript ./bin/select-anything.sh {
-              inherit (programs) fzf;
+              inherit (programs) fzf rg;
             };
             selectBuffer = substituteScript ./bin/select-buffer.sh {
               inherit (programs) fzf kks;
@@ -143,7 +144,7 @@
                 "pbpaste"
               else
                 "${lib.getExe xsel} -o -b";
-            inherit (programs) git zjstatus shell zellij kak kks lazygit yazi;
+            inherit (programs) git shell zellij kak kks lazygit yazi rg;
             kaklsp = programs.kak-lsp;
             fileExplorer = programs.yazi;
             vcsClient = substituteScript ./bin/vcs-client.sh {

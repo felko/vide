@@ -50,6 +50,8 @@ set-face global InlayHint rgb:306a88+d
 set-option global tabstop 2
 set-option global scrolloff 5,10
 
+set-option global grepcmd "rg"
+
 # cycle through completion candidates with tab
 
 hook global InsertCompletionShow .* %{
