@@ -109,7 +109,7 @@ map -docstring "dash" global user <space> ': file-select<ret>'
 
 define-command -docstring 'Select a file to open' file-select %{
     evaluate-commands %sh{
-        @zellij@ run --close-on-exit --floating --name select -- @selectFile@ "$kak_buffile"
+        @zellij@ run --close-on-exit --floating --name select -- @selectFile@ $kak_session $kak_client "$kak_buffile"
     }
 }
 

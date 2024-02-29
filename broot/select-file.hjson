@@ -1,11 +1,11 @@
 imports: [
-	@brootCommonConfig@
+  @brootCommonConfig@
 ]
 
-default_flags: -ghi
+quit_on_last_cancel: true
 
 verbs: [
-	{
+  {
     name: select
     key: enter
     execution: echo {file} {line}
@@ -14,4 +14,3 @@ verbs: [
     leave_broot: true
   }
 ]
-

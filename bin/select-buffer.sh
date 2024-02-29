@@ -1,6 +1,6 @@
 selected=`@kks@ get %val{buflist} | @fzf@`
 if [ -n "$selected" ]; then
-    @kks@ send buffer "$selected"
+    @kks@ send -s $1 -c $2 buffer "$selected"
 else
-    @kks@ send echo "no buffer selected"
+    @kks@ send -s $1 -c $2 echo "no buffer selected"
 fi

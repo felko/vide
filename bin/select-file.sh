@@ -1,10 +1,11 @@
-if [ -f "$1" ]; then
-    selected=`@brootSelectFile@ --cmd ":focus $(dirname $1);:select $(basename $1)"`
+path=`realpath $3`
+if [ -f "$path" ]; then
+    selected=`@brootSelectFile@ --cmd ":select $(basename $path)" "$(dirname $path)"`
 else
     selected=`@brootSelectFile@`
 fi
 if [ -n "$selected" ]; then
-    @kks@ send edit-or-buffer "$selected"
+    @kks@ send -s $1 -c $2 edit-or-buffer "$selected"
 else
-    @kks@ send echo "no file selected"
+    @kks@ send -s $1 -c $2 echo "no file selected"
 fi
