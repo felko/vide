@@ -45,13 +45,6 @@ set-face global ReferenceBind +u@Reference
 # Face for inlay hints.
 set-face global InlayHint rgb:306a88+d
 
-define-command -override -hidden lsp-menu-impl %{
-    echo %sh{
-        zellij run --close-on-exit --floating --name select -- @selectAnything@ $@
-    }
-}
-
-
 # options
 
 set-option global tabstop 2
