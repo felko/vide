@@ -17,6 +17,22 @@
         "type": "github"
       }
     },
+    "broot-source": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1709383862,
+        "narHash": "sha256-HTFBr+62O/z5j5UJvbBm749wvEWcbVsHxuWF2+7iEY0=",
+        "owner": "Canop",
+        "repo": "broot",
+        "rev": "2fc2283b2bdbfdbaba9b265ee719eb64c0b58a73",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Canop",
+        "repo": "broot",
+        "type": "github"
+      }
+    },
     "crane": {
       "inputs": {
         "nixpkgs": [
@@ -124,6 +140,7 @@
     "root": {
       "inputs": {
         "alacritty-source": "alacritty-source",
+        "broot-source": "broot-source",
         "flake-utils": "flake-utils",
         "kak-lsp-source": "kak-lsp-source",
         "kks-source": "kks-source",

@@ -7,6 +7,73 @@ special_paths: {
     "/nix/store": no-enter
 }
 
+verbs: [
+    {
+        invocation: edit
+        shortcut: e
+        key: ctrl-e
+        apply_to: text_file
+        execution: "$EDITOR {file}"
+        leave_broot: true
+    }
+
+    {
+        name: touch
+        invocation: touch {new_file}
+        execution: "touch {directory}/{new_file}"
+        leave_broot: false
+    }
+
+    {
+        invocation: create {subpath}
+        execution: "echo {directory}/{subpath}"
+        leave_broot: true
+    }
+
+    {
+        invocation: git_diff
+        shortcut: gd
+        leave_broot: false
+        execution: "git difftool -y {file}"
+    }
+
+    {
+        invocation: "backup {version}"
+        key: ctrl-b
+        leave_broot: false
+        auto_exec: false
+        execution: "cp -r {file} {parent}/{file-stem}-{version}{file-dot-extension}"
+    }
+
+    {
+        invocation: "rm"
+        internal: "trash"
+        leave_broot: false
+    }
+
+    {
+        invocation: "cpr {dest}"
+        external: "cp -r {directory}/* {dest}"
+        from_shell: true
+    }
+
+    {
+        invocation: home
+        key: ctrl-home
+        execution: ":focus ~"
+    }
+
+    {
+        invocation: gtr
+        execution: ":focus {git-root}"
+    }
+
+    {
+        key: alt-g
+        execution: ":toggle_git_status"
+    }
+]
+
 skin: {
     # base00 base3 / base1 base2
     default: rgb(32, 6, 58) none / rgb(147, 161, 161) none

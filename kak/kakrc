@@ -109,12 +109,12 @@ define-command -docstring 'Select a file to open' file-select %{
 
 define-command -docstring 'Select a directory in which to cd' file-select-directory %{
     evaluate-commands %sh{
-        @zellij@ run --close-on-exit --floating --name select -- @selectDirectory@ "$kak_buffile"
+        @zellij@ run --close-on-exit --floating --name select -- @selectDirectory@ $kak_session $kak_client "$kak_buffile"
     }
 }
 
 map -docstring "select" global file f ': file-select<ret>'
-map -docstring "cd" global file d ': file-select-directory<ret>'
+map -docstring "cd"     global file d ': file-select-directory<ret>'
 
 
 ## buffer

@@ -1,10 +1,10 @@
-if [ -f "$1" ]; then
-    selected=`@brootSelectDirectory@ --cmd ":select $(dirname $1)"`
+if [ -f "$3" ]; then
+    selected="$(@brootSelectDirectory@ $3)"
 else
-    selected=`@brootSelectDirectory@`
+    selected="$(@brootSelectDirectory@)"
 fi
 if [ -n "$selected" ]; then
-    @kks@ send change-directory "$selected"
+    @kks@ send -s $1 -c $2 change-directory "$selected"
 else
-    @kks@ send echo "no directory selected"
+    @kks@ send -s $1 -c $2 echo "no directory selected"
 fi

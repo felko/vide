@@ -25,6 +25,10 @@
       url = "github:kak-lsp/kak-lsp";
       flake = false;
     };
+    broot-source = {
+      url = "github:Canop/broot";
+      flake = false;
+    };
   };
 
   outputs = inputs @ { self, nixpkgs, flake-utils, ... }:
@@ -71,6 +75,11 @@
               inherit (pkgs.darwin.apple_sdk.frameworks) CoreServices Security SystemConfiguration;
             };
 
+            broot = pkgs.callPackage ./nix/broot.nix {
+              src = inputs.broot-source;
+              inherit (pkgs.darwin.apple_sdk.frameworks) Foundation Security;
+              inherit (pkgs) libiconv zlib;
+            };
             substituteBroot = conf: components:
               let
                 substitutedConf = lib.substituteComponents {
@@ -82,7 +91,16 @@
                 };
               in
                 pkgs.writeShellScript "vide-broot-${lib.stripFileExtension conf}.sh" ''
-                  ${lib.getExe pkgs.broot} --conf ${substitutedConf} "$@"
+                  cmd_file="$(mktemp)"
+                  if ${broot}/bin/broot --conf ${substitutedConf} --outcmd $cmd_file $@; then
+                      cmd=$(<"$cmd_file")
+                      rm -f "$cmd_file"
+                      eval "$cmd"
+                  else
+                      code=$?
+                      rm -f "$cmd_file"
+                      exit "$code"
+                  fi
                 '';
           in {
             alacritty = lib.getExe alacritty;
@@ -100,7 +118,7 @@
             yazi = lib.getExe pkgs.yazi;
             rg = lib.getExe pkgs.ripgrep;
           };
-        
+
         components =
           let
             substituteScript = file: components:
@@ -126,7 +144,7 @@
             };
             selectDirectory = substituteScript ./bin/select-directory.sh {
               inherit (programs) kks;
-              brootSelectFile = programs.broot-select-directory;
+              brootSelectDirectory = programs.broot-select-directory;
             };
             selectAnything = substituteScript ./bin/select-anything.sh {
               inherit (programs) fzf rg;
