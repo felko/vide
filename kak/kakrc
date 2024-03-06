@@ -18,13 +18,27 @@ add-highlighter global/ number-lines # -relative
 
 eval %sh{@kaklsp@ --kakoune -s $kak_session}
 lsp-enable
+# set-option global lsp_cmd "@kaklsp@ -s %val{session}"
 
 set-option global lsp_diagnostic_line_error_sign ''
 set-option global lsp_diagnostic_line_warning_sign ''
 set-option global lsp_diagnostic_line_info_sign ''
 set-option global lsp_diagnostic_line_hint_sign ''
 
-# Faces used by inline diagnostics.
+# declare-option -hidden str modeline_progress "\ue38a"
+# define-command -hidden -params 6 -override lsp-handle-progress %{
+#     set-option global modeline_progress %sh{
+#         if ! "$6"; then
+#             echo "$2${5:+" ($5%)"}${4:+": $4"}"
+#         fi
+#     }
+# }
+
+# lsp-inlay-hints-enable global
+
+# Faces used by inlay hints.
+set-face  global InlayHint rgb:c0c0c0,default,default
+# Faces used by diagnostics.
 set-face global DiagnosticError   default,default,rgb:ba3b46+c
 set-face global DiagnosticHint    default,default,rgb:306a88+c
 set-face global DiagnosticInfo    default,default,rgb:20063b+c
@@ -40,8 +54,8 @@ set-face global LineFlagHint rgb:306a88,default
 set-face global LineFlagInfo rgb:20063b,default
 set-face global LineFlagWarning rgb:ff882d,default
 # Face for highlighting references.
-set-face global Reference MatchingChar
-set-face global ReferenceBind +u@Reference
+set-face global Reference default,rgba:44CC4433,default
+set-face global ReferenceBind default,rgba:CC444433,default
 # Face for inlay hints.
 set-face global InlayHint rgb:306a88+d
 
