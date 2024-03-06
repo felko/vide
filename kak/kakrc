@@ -45,11 +45,10 @@ set-face global ReferenceBind +u@Reference
 # Face for inlay hints.
 set-face global InlayHint rgb:306a88+d
 
-# options
+# general options
 
 set-option global tabstop 2
 set-option global scrolloff 5,10
-
 set-option global grepcmd "rg --follow --line-number --column"
 
 # cycle through completion candidates with tab
@@ -91,13 +90,13 @@ declare-user-mode buffer
 declare-user-mode eval
 declare-user-mode clipboard
 
-map -docstring "file" global user f ': enter-user-mode file<ret>'
-map -docstring "buffer" global user b ': enter-user-mode buffer<ret>'
-map -docstring "eval" global user e ': enter-user-mode eval<ret>'
-map -docstring "clipboard" global user c ': enter-user-mode clipboard<ret>'
-map -docstring "lsp" global user l ': enter-user-mode lsp<ret>'
+map -docstring "file"      global user f       ': enter-user-mode file<ret>'
+map -docstring "buffer"    global user b       ': enter-user-mode buffer<ret>'
+map -docstring "eval"      global user e       ': enter-user-mode eval<ret>'
+map -docstring "clipboard" global user c       ': enter-user-mode clipboard<ret>'
+map -docstring "lsp"       global user l       ': enter-user-mode lsp<ret>'
 
-map -docstring "dash" global user <space> ': file-select<ret>'
+map -docstring "dash"      global user <space> ': file-select<ret>'
 
 
 ## file
