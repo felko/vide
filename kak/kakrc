@@ -82,7 +82,7 @@ hook global InsertCompletionHide .* %{
 define-command edit-or-buffer -params 0.. %{
    evaluate-commands %sh{
         if [ -n "$1" ]; then
-            if [ -e "$2" ] || [ $2 -eq 0 ]; then
+            if [ -e "$2" ] || [ "$2" -eq 0 ]; then
                 for buf in "$kak_buflist"; do
                     if [ "$buf" == "$1" ]; then
                         echo buffer "$1"
@@ -139,10 +139,12 @@ define-command -docstring 'Select a buffer to open' buffer-select %{
     }
 }
 
-map -docstring "select" global buffer b ': buffer-select<ret>'
-map -docstring "delete" global buffer q ': delete-buffer<ret>'
-map -docstring "scratch" global buffer s ': edit -scratch<ret>'
-map -docstring "debug" global buffer d ': edit -debug *debug*<ret>'
+map -docstring "select"   global buffer b ': buffer-select<ret>'
+map -docstring "delete"   global buffer q ': delete-buffer<ret>'
+map -docstring "next"     global buffer n ': buffer-next<ret>'
+map -docstring "previous" global buffer p ': buffer-previous<ret>'
+map -docstring "scratch"  global buffer s ': edit -scratch<ret>'
+map -docstring "debug"    global buffer d ': edit -debug *debug*<ret>'
 
 map -docstring "delete buffer" global normal <c-w> ': delete-buffer<ret>'
 map -docstring "delete buffer" global insert <c-w> ': delete-buffer<ret>'
@@ -168,7 +170,7 @@ declare-option str clipboard_paste_command "@pasteCommand@"
 #     printf %s "$kak_main_reg_dquote" | $kak_opt_clipboard_copy_command
 # }}
 
-define-command -override -docstring 'Yank selection to system clipboard' clipboard-yank %{
+define-command -docstring 'Yank selection to system clipboard' clipboard-yank %{
     execute-keys <a-|> %opt{clipboard_copy_command}<ret>
 }
 
