@@ -158,7 +158,19 @@ define-command -docstring 'Evaluate kakscript' evaluate-kakscript  %{
     }
 }
 
-map -docstring 'kakscript' global eval k ': evaluate-kakscript<ret>'
+define-command -docstring 'Evaluate shell' evaluate-shell %{
+   execute-keys <a-!> %val{selection}<ret>
+}
+
+declare-option -docstring 'Path to the Python interpreter' str python_cmd 'python3.12'
+
+define-command -docstring 'Evaluate Python' evaluate-python %{
+   execute-keys <a-!> %opt{python_cmd}<ret>
+}
+
+map -docstring 'kak'    global eval k ': evaluate-kakscript<ret>'
+map -docstring 'shell'  global eval $ ': evaluate-shell<ret>'
+map -docstring 'python' global eval p ': evaluate-python<ret>'
 
 
 ## clipboard
