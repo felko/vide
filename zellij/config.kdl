@@ -97,10 +97,6 @@ keybinds clear-defaults=true {
         bind "p" { SwitchToMode "Pane"; }
         bind "t" { SwitchToMode "Tab"; }
         bind "r" { SwitchToMode "Resize"; }
-        // bind "z" {
-        //     LaunchOrFocusPlugin "file:@zellijHarpoon@";
-        //     SwitchToMode "Normal"
-        // }
         bind "z" {
             LaunchOrFocusPlugin "zellij:session-manager" {
                 floating true
