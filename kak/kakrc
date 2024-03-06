@@ -12,7 +12,7 @@ set-option global ui_options \
 
 colorscheme vide-light
 
-add-highlighter global/ number-lines -relative
+add-highlighter global/ number-lines # -relative
 
 # lsp setup
 
