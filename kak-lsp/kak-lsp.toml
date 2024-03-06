@@ -332,10 +332,10 @@ command = "ocamllsp"
 # # See https://github.com/rust-lang/rls#configuration
 # # features = []
 
-[language_server.rnix-lsp]
+[language_server.nil]
 filetypes = ["nix"]
+command = "nil"
 roots = ["flake.nix", "shell.nix", ".git", ".hg"]
-command = "rnix-lsp"
 
 [language_server.rust-analyzer]
 filetypes = ["rust"]
